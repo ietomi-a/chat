@@ -1,0 +1,9 @@
+くらいあんと認証情報で
+「承認済みのJavaScript生成元」に http://localhost:8080
+「承認済みのりダイレクトURI」に http://localhost:8080/auth/callback/google
+を設定
+
+くらいあんとID
+ 606208371926-dkhlooofse3hakqj2fkfrqlpv1vpuu9v.apps.googleusercontent.com 
+くらいあんんとしーくれっと
+ wGcZPH5OnR1Jw4dPtOe1PqH_ 
