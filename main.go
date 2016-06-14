@@ -48,10 +48,10 @@ func main(){
 	r := newRoom()
 	fmt.Print("after newRoom\n")
 	// http module への登録.
-//	http.Handle( "/chat", MustAuth(&templateHandler{filename: "chat.html"}) )
-	http.Handle( "/chat", &templateHandler{filename: "chat.html"} )
+	http.Handle( "/chat", MustAuth(&templateHandler{filename: "chat.html"}) )
+	//http.Handle( "/chat", &templateHandler{filename: "chat.html"} )
 	http.Handle( "/login", &templateHandler{filename: "login.html"} )
-	//http.HandleFunc( "/auth/", loginHandler)
+	http.HandleFunc( "/auth/", loginHandler)
 	http.Handle( "/room", r )
 
 	fmt.Print("before r.run\n")

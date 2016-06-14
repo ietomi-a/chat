@@ -49,7 +49,7 @@ func loginHandler( w http.ResponseWriter, r *http.Request ){
 		w.WriteHeader( http.StatusTemporaryRedirect )
 
 	case "callback":
-		fmt.Print("callback okok\n")
+		//fmt.Print("callback okok\n")
 		provider, err := gomniauth.Provider(provider)
 		if err != nil {
 			log.Fatalln("認証ぷろばいだーの取得に失敗しました。:", provider, "-", err )
@@ -65,6 +65,7 @@ func loginHandler( w http.ResponseWriter, r *http.Request ){
 		}
 		authCookieValue := objx.New( map[string]interface{}{ 
 			"name": user.Name(), 
+			"avatar_url": user.AvatarURL(),
 		} ).MustBase64()
 		http.SetCookie(w, &http.Cookie{ 
 			Name: "auth", 
