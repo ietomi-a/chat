@@ -1,13 +1,14 @@
 package main
 import ( 
 	"github.com/gorilla/websocket" 
-	"fmt"
+//	"fmt"
 )
 
 type client struct {
 	socket *websocket.Conn
 	send chan []byte
 	room *room
+	userData map[string]interface{}
 }
 
 func (c *client) read() {

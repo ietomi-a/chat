@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/websocket" 
 	"net/http"
 	"fmt"
+	"github.com/stretchr/objx"
 //	"time"
 )
 
@@ -59,10 +60,16 @@ func (r *room) ServeHTTP( w http.ResponseWriter, req *http.Request ){
 		return
 	}
 	fmt.Print("in room ServeHTTP not err\n")
+
+	authCookie, err := req.Cookie("auth")
+	if err != nil {
+		log.Fatal("くっきーの取得に失敗しました:", err )
+	}
 	client := &client{ 
 		socket: socket,
 		send: make(chan []byte, messageBufferSize),
 		room: r, 
+		userData: objx.MustFromBase64(authCookie.Value),
 	}
 	r.join <- client
 	defer func() { r.leave <- client } ()
