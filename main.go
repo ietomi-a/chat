@@ -44,9 +44,10 @@ func main(){
 			"http://localhost:8080/auth/callback/google", 
 		),
 	)
-	fmt.Print("before newRoom\n")
-	r := newRoom()
-	fmt.Print("after newRoom\n")
+
+	r := newRoom(UseAuthAvatar)
+	//r := newRoom()
+
 	// http module への登録.
 	http.Handle( "/chat", MustAuth(&templateHandler{filename: "chat.html"}) )
 	//http.Handle( "/chat", &templateHandler{filename: "chat.html"} )
