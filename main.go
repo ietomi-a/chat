@@ -54,9 +54,18 @@ func main(){
 	http.HandleFunc( "/auth/", loginHandler)
 	http.Handle( "/room", r )
 
-	fmt.Print("before r.run\n")
+	http.HandleFunc( "/logout", func(w http.ResponseWriter, r *http.Request ){
+		http.SetCookie(w, &http.Cookie{
+			Name: "auth",
+			Value: "",
+			Path: "/",
+			MaxAge: -1,
+		})
+		w.Header()["Location"] = []string{"/chat"}
+		w.WriteHeader( http.StatusTemporaryRedirect )
+	})
+
 	go r.run()
-	fmt.Print("after r.run\n")
 	log.Println("web start port", *addr )
 	if err := http.ListenAndServe( *addr, nil); err != nil {
 		fmt.Print("error!")
