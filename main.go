@@ -29,9 +29,7 @@ func (t *templateHandler) ServeHTTP( w http.ResponseWriter, r *http.Request ){
 		data["UserData"] = objx.MustFromBase64(authCookie.Value)
 	}
 	t.templ.Execute(w,data)
-
 	//t.templ.Execute(w,r)
-
 }
 
 func main(){
@@ -46,21 +44,22 @@ func main(){
 			"http://localhost:8080/auth/callback/google", 
 		),
 	)
-
+	fmt.Print("before newRoom\n")
 	r := newRoom()
-
+	fmt.Print("after newRoom\n")
 	// http module への登録.
-	http.Handle( "/", MustAuth(&templateHandler{filename: "chat.html"}) )
-	//http.Handle( "/", &templateHandler{filename: "chat.html"} )
+//	http.Handle( "/chat", MustAuth(&templateHandler{filename: "chat.html"}) )
+	http.Handle( "/chat", &templateHandler{filename: "chat.html"} )
 	http.Handle( "/login", &templateHandler{filename: "login.html"} )
-	http.HandleFunc( "/auth/", loginHandler)
+	//http.HandleFunc( "/auth/", loginHandler)
 	http.Handle( "/room", r )
 
+	fmt.Print("before r.run\n")
 	go r.run()
+	fmt.Print("after r.run\n")
 	log.Println("web start port", *addr )
 	if err := http.ListenAndServe( *addr, nil); err != nil {
 		fmt.Print("error!")
-	} else {
-		fmt.Print("ok")
-	}
+	} 
+	fmt.Print("listen ok")
 }

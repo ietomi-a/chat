@@ -4,6 +4,8 @@ import (
 	"log" 
 	"github.com/gorilla/websocket" 
 	"net/http"
+	"fmt"
+//	"time"
 )
 
 type room struct {
@@ -15,6 +17,7 @@ type room struct {
 
 func (r *room) run() {
 	for {
+		//time.Sleep(1000*time.Millisecond)
 		select {
 		case client := <- r.join:
 			// 参加
@@ -34,6 +37,9 @@ func (r *room) run() {
 					close(client.send)
 				}
 			}
+		//default:
+		// default があるとすべて default で処理しようとして失敗する。
+		//fmt.Print( "default select ok\n")
 		}// select
 	} // for
 } // func (r *room) run() 
@@ -52,6 +58,7 @@ func (r *room) ServeHTTP( w http.ResponseWriter, req *http.Request ){
 		log.Fatal("ServeHTTP:", err )
 		return
 	}
+	fmt.Print("in room ServeHTTP not err\n")
 	client := &client{ 
 		socket: socket,
 		send: make(chan []byte, messageBufferSize),

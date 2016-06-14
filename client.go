@@ -1,5 +1,8 @@
 package main
-import ( "github.com/gorilla/websocket" )
+import ( 
+	"github.com/gorilla/websocket" 
+	"fmt"
+)
 
 type client struct {
 	socket *websocket.Conn
@@ -9,7 +12,9 @@ type client struct {
 
 func (c *client) read() {
 	for { 
+		//fmt.Print("in client read\n")
 		if _, msg, err := c.socket.ReadMessage(); err == nil {
+			//fmt.Print("client read\n")
 			c.room.forward <- msg
 		}else{
 			break

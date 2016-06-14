@@ -20,6 +20,8 @@ func (h *authHandler) ServeHTTP( w http.ResponseWriter, r *http.Request ){
 	}else if err != nil {
 		panic( err.Error() )
 	}else{
+		// ok
+		//fmt.Print("this ok\n")
 		h.next.ServeHTTP(w,r)
 	}
 }
@@ -61,8 +63,13 @@ func loginHandler( w http.ResponseWriter, r *http.Request ){
 		if err != nil {
 		 	log.Fatalln("user の取得に失敗しました:", provider, "-", err )
 		}
-		authCookieValue := objx.New(map[string]interface{}{ "name": user.Name(), } ).MustBase64()
-		http.SetCookie(w, &http.Cookie{ Name: "auth", Value: authCookieValue, Path: "/"} )
+		authCookieValue := objx.New( map[string]interface{}{ 
+			"name": user.Name(), 
+		} ).MustBase64()
+		http.SetCookie(w, &http.Cookie{ 
+			Name: "auth", 
+			Value: authCookieValue, 
+			Path: "/" } )
 		w.Header()["Location"] = []string{"/chat"}
 		w.WriteHeader( http.StatusTemporaryRedirect )
 

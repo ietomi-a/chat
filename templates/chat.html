@@ -34,7 +34,7 @@
         if (!window["WebSocket"]) {
           alert( "error: WebSocket not adopted" );
         } else {
-          socket = new WebSocket("ws://localhost{{.HOST}}/room");
+          socket = new WebSocket("ws://{{.Host}}/room");
           socket.onclose = function() {
             alert( "connection finished" );
           }
