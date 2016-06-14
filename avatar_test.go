@@ -7,6 +7,15 @@ func TestAuthAvatar(t *testing.T){
 	url, err := authAvatar.GetAvatarURL(client)
 	if err != ErrNoAvatarURL {
 		t.Error("値が存在しない場合、 AuthAvatar.GetAvatarURL は" + "ErrNoAvatarURL を返すべきです。" )
-			
+	}
+	testUrl := "http://url-to-avatar/"
+	client.userData = map[string]interface{}{ "avatar_url": testUrl }
+	url, err = authAvatar.GetAvatarURL(client)	
+	if err != nil {
+		t.Error("値が存在する場合、 AuthAvatar.GetAvatarURL はえらーを返すべきではありません。" )
+	} else {
+		if url != testUrl {
+			t.Error("AuthAvatar.GetAvatarURL は 正しい URL を返すべきです。" )
+		}
 	}
 }
